@@ -15,7 +15,7 @@
     <h1>URL Shortener Microservice</h1>
     <main>
       <section>
-        <form action="api/shorturl" method="POST">
+        <form id="url_form" action="api/shorturl" method="POST">
           <fieldset>
             <legend>URL Shortener</legend>
             <label for="url_input">URL:</label>
@@ -24,9 +24,34 @@
           </fieldset>
         </form>
       </section>
+      <div id="response-field"></div>
     </main>
     <footer>
       <p>By <a href="https://www.freecodecamp.org/">freeCodeCamp</a></p>
     </footer>
+
+    <script>
+      
+      const urlForm = document.getElementById("url_form");
+      const urlInput = document.getElementById("url_input").value;
+      const resField = document.getElementById("response-field");
+
+      urlForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        try {
+          const res = await fetch('http://localhost:3000/api/shorturl', {
+            method: POST,
+            
+          });
+          const data = await res.json();
+          
+          resField.textContent = data;
+        } catch(err) {
+          console.log(err);
+        }
+      })
+
+    </script>
   </body>
 </html>
