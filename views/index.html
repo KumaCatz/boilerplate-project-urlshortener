@@ -33,20 +33,24 @@
     <script>
       
       const urlForm = document.getElementById("url_form");
-      const urlInput = document.getElementById("url_input").value;
       const resField = document.getElementById("response-field");
 
       urlForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        
+        const url = document.getElementById("url_input").value;
 
         try {
           const res = await fetch('http://localhost:3000/api/shorturl', {
-            method: POST,
-            
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ url })
           });
           const data = await res.json();
-          
-          resField.textContent = data;
+          console.log(data)
+          resField.textContent = JSON.stringify(data, null, 2)
         } catch(err) {
           console.log(err);
         }
